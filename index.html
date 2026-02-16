@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>eSKalate Initiative</title>
+  <style>
+    :root {
+      --royal-blue: #1f4ed8;
+      --royal-blue-2: #274fda;
+      --blue-dark: #163aa3;
+      --sun-yellow: #ffd447;
+      --sun-yellow-soft: #fff4bf;
+      --surface: #ffffff;
+      --bg: #f7f9ff;
+      --text: #1b2551;
+      --muted: #5f6b8b;
+      --border: #dbe4ff;
+      --radius: 16px;
+      --shadow: 0 14px 35px rgba(31, 78, 216, 0.13);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: "Inter", "Segoe UI", Roboto, Arial, sans-serif;
+      color: var(--text);
+      background: linear-gradient(180deg, #f7f9ff 0%, #ffffff 100%);
+      line-height: 1.65;
+    }
+
+    .container { width: min(1140px, 92%); margin: 0 auto; }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(8px);
+      background: rgba(255, 255, 255, 0.9);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-wrap {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      gap: 12px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      /* color: var(--text);
+      font-weight: 800; */
+    }
+
+    .brand-text {
+      font-weight: bold;
+      font-size: 1.2rem;
+      color: inherit;
+    }
+
+    .logo {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: linear-gradient(145deg, var(--royal-blue), var(--blue-dark));
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-size: .72rem;
+      border: 2px solid var(--sun-yellow);
+    }
+
+    .logo-img {
+      height: 40px;
+      width: auto;
+      display: block;
+      border: 1px dashed var(--royal-blue);
+    }
+
+    nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      gap: 18px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--muted);
+      font-weight: 700;
+      position: relative;
+      transition: color .22s ease;
+    }
+
+    nav a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -5px;
+      width: 0;
+      height: 2px;
+      background: var(--sun-yellow);
+      transition: width .22s ease;
+    }
+
+    nav a:hover { color: var(--royal-blue); }
+    nav a:hover::after { width: 100%; }
+
+    .menu-btn {
+      display: none;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--royal-blue);
+      font-weight: 700;
+      border-radius: 10px;
+      padding: 9px 12px;
+      cursor: pointer;
+    }
+
+    section { padding: 74px 0; }
+
+    .hero {
+      padding-top: 88px;
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 26px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      background: var(--sun-yellow-soft);
+      color: var(--blue-dark);
+      border: 1px solid #ffe36d;
+      border-radius: 999px;
+      padding: 6px 11px;
+      font-size: .82rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    h1, h2, h3 { margin: 0 0 12px; line-height: 1.2; }
+    h1 { font-size: clamp(2.1rem, 4.5vw, 3.35rem); color: var(--royal-blue); }
+    h2 { font-size: clamp(1.7rem, 3.2vw, 2.2rem); color: var(--royal-blue); }
+
+    .lead { color: var(--muted); max-width: 62ch; margin-bottom: 24px; }
+
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+    .btn {
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      font-weight: 800;
+      padding: 12px 18px;
+      transition: transform .2s ease, box-shadow .2s ease, background .2s ease, color .2s ease;
+      border: 2px solid transparent;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: #fff;
+      color: var(--royal-blue);
+      border-color: var(--royal-blue);
+      box-shadow: 0 8px 24px rgba(31, 78, 216, 0.18);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      background: var(--royal-blue);
+      color: #fff;
+      box-shadow: 0 14px 28px rgba(31, 78, 216, 0.28);
+    }
+
+    .btn-alt {
+      background: var(--sun-yellow);
+      color: var(--blue-dark);
+      border-color: #f7ca2a;
+    }
+
+    .btn-alt:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 25px rgba(255, 212, 71, 0.45);
+      filter: brightness(1.03);
+    }
+
+    .hero-image {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .hero-image img {
+      width: 100%;
+      height: 330px;
+      object-fit: cover;
+    }
+
+    .hero-image figcaption {
+      padding: 14px;
+      font-size: .92rem;
+      color: var(--muted);
+      background: #fff;
+    }
+
+    .section-title { margin-bottom: 24px; }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: var(--shadow);
+      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+    }
+
+    .card ul{
+      list-style-type: disc;
+      margin-top: 10px;
+      padding-left: 20px;
+    }
+
+    .card li{
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+      border-color: #bad0ff;
+      box-shadow: 0 18px 30px rgba(31, 78, 216, 0.16);
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .media-card img {
+      width: 100%;
+      height: 185px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 10px;
+    }
+
+    .media-card p { margin: 0; color: var(--muted); font-size: .94rem; }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .gallery figure {
+      margin: 0;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+
+    .gallery figure:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 30px rgba(31, 78, 216, 0.18);
+    }
+
+    .gallery img {
+      width: 100%;
+      height: 155px;
+      object-fit: cover;
+    }
+
+    .gallery figcaption {
+      padding: 10px;
+      font-size: .86rem;
+      color: var(--muted);
+    }
+
+    .contact-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    form, .info {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    label {
+      display: block;
+      font-weight: 700;
+      margin: 12px 0 6px;
+      color: var(--blue-dark);
+    }
+
+    input, textarea {
+      width: 100%;
+      border: 1px solid #cdd8ff;
+      border-radius: 10px;
+      padding: 11px;
+      font: inherit;
+    }
+
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: var(--royal-blue);
+      box-shadow: 0 0 0 3px rgba(31, 78, 216, 0.14);
+    }
+
+    textarea { min-height: 120px; resize: vertical; }
+
+    footer {
+      padding: 26px 0;
+      text-align: center;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+      margin-top: 24px;
+      background: #fff;
+    }
+
+    .social-section {
+      margin-top: 18px;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .social-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: var(--royal-blue);
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 9px 12px;
+      font-weight: 700;
+      transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+    }
+
+    .social-link:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 22px rgba(31, 78, 216, 0.2);
+      background: #f7f9ff;
+    }
+
+    .social-icon {
+      width: 18px;
+      height: 18px;
+      display: inline-block;
+      color: var(--royal-blue);
+    }
+
+    @media (max-width: 980px) {
+      .hero, .split, .contact-wrap { grid-template-columns: 1fr; }
+      .grid-3 { grid-template-columns: 1fr 1fr; }
+      .gallery { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 760px) {
+      .menu-btn { display: inline-block; }
+      nav {
+        position: absolute;
+        top: 64px;
+        left: 0;
+        right: 0;
+        background: #fff;
+        border-bottom: 1px solid var(--border);
+        display: none;
+      }
+      nav.open { display: block; }
+      nav ul { flex-direction: column; gap: 0; }
+      nav a { display: block; padding: 12px 4%; }
+      .grid-3, .gallery { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav-wrap">
+      <a href="#home" class="brand">
+        <img src = "Images/SKB-LOGO.jpg" class ="logo-img">
+        <span class="brand text">eSKalate Initiative</span>
+      </a>
+      <button id="menuBtn" class="menu-btn" type="button">Menu</button>
+      <nav id="siteNav">
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#vision-mission">Vision & Mission</a></li>
+          <li><a href="#conferences">Conferences</a></li>
+          <li><a href="#community">Community Service</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section id="home" class="container hero">
+      <div>
+        <h1>eSKalate Initiative</h1>
+        <span class="eyebrow">Empower | Equip | Excel</span>
+        <p class="lead">Building confident, skilled, and socially responsible young leaders through transformative learning, mentorship, and community engagement.</p>
+        <div class="hero-actions">
+          <a href="#about" class="btn btn-primary">Learn More</a>
+          <a href="#conferences" class="btn btn-alt">Our Conferences</a>
+        </div>
+      </div>
+      <figure class="hero-image">
+        <img src="Images/inspired.st-230.jpg" alt="Students collaborating during a learning session" />
+        <figcaption>A Cross section of speakers and organizers at the Start Right and AlumniConnect Conference 2026.</figcaption>
+      </figure>
+    </section>
+
+    <section id="about">
+      <div class="container">
+        <div class="section-title">
+          <h2>About Us</h2>
+          <p class="lead">eSKalate Initiative is an educational and youth development organization focused on unlocking potential and enabling meaningful impact in communities.</p>
+        </div>
+        <div class="grid-3">
+          <article class="card">
+            <h3>Who We Are</h3>
+            <p>eSKalate Initiative is a student-centered development organization committed to empowering young people through mentorship, leadership development, and practical learning experiences.<br> We exist to bridge the gap between academic life and real-world success by equipping students with the mindset, skills, and confidence needed to thrive.</p>
+          </article>
+          <article class="card">
+            <h3>What We Do</h3>
+            <p>We design and organize impactful programmes including conferences, mentorship sessions, and community-based initiatives.<br> Our activities focus on academic excellence, personal growth, career readiness, and leadership development.</p>
+          </article>
+          <article class="card">
+            <h3>Our Focus</h3>
+            <ul>
+              <li>Student empowerment</li>
+              <li>Leadership and personal development</li>
+              <li>Academic and career guidance</li>
+              <li>Community impact.</li>
+            </ul>
+            
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="vision-mission">
+      <div class="container split">
+        <article class="card">
+          <h2>Vision</h2>
+          <p>To raise a generation of confident, disciplined, and purpose-driven young leaders prepared to excel academically, professionally, and socially.</p>
+        </article>
+        <article class="card">
+          <h2>Mission</h2>
+          <p>To empower, equip, and support students through mentorship, education, and transformative programmes that promote intentional growth, leadership, and lifelong success.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="conferences">
+      <div class="container">
+        <div class="section-title">
+          <h2>Conferences</h2>
+          <p class="lead">Our conferences are designed to inspire, educate, and empower students. Each event creates a platform for learning, mentorship, and meaningful conversations around academic success, leadership, career development, and personal growth.</p>
+        </div>
+        <div class="grid-3">
+          <article class="card media-card">
+            <img src="Images/SRACed.jpg" alt="Participants at the Conference" />
+            <h3>The Start Right and AlumniConnect Conference 2026</h3>
+            <p>A transformational orientation and mentorship conference aimed at guiding students to begin their university journey with clarity, discipline, and purpose.</p>
+          </article>
+          <article class="card media-card">
+            <img src="Images/inspired.st-125.jpg" alt="Panel discussion with youth and mentors" />
+            <h3>The Start Right and AlumniConnect Conference 2026</h3>
+            <p>The event connected students with experienced professionals, alumni, and mentors.</p>
+          </article>
+          <article class="card media-card">
+            <img src="Images/inspired.st-160.jpg" alt="Audience engaging during an educational event" />
+            <h3>The Start Right and AlumniConnect Conference 2026</h3>
+            <p>The impactful conference was aimed at guiding students, particularly freshmen of the University of Education, Winneba, School of Business.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="community">
+      <div class="container">
+        <div class="section-title">
+          <h2>Community Service</h2>
+          <p class="lead">At eSKalate Initiative, we believe development goes beyond the classroom. Our community service projects promote social responsibility, leadership in action, and meaningful contributions to society.</p>
+        </div>
+        <div class="split">
+          <article class="card media-card">
+            <img src="Images/children.jpg" alt="Volunteers supporting children in a community outreach" />
+            <p>Volunteers supporting children in a community outreach</p>
+          </article>
+          <article class="card media-card">
+            <img src="Images/community-service.jpg" alt="Community members participating in a service initiative" />
+            <p>Youth-led community service project focused on collaboration and social impact.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="gallery">
+      <div class="container">
+        <div class="section-title">
+          <h2>Gallery / Media</h2>
+          <p class="lead">A visual highlight of conferences, mentorship sessions, and outreach activities.</p>
+        </div>
+        <div class="gallery">
+          <figure>
+            <img src="Images/Inspired.st-35.jpg" alt="Students celebrating at a youth conference" />
+            <figcaption>Team Lead Mr. Stephen Kodjo Bienu <br>Giving his remarks before the start of the SRAC'26</figcaption>
+          </figure>
+          <figure>
+            <img src="Images/Inspired.st-45.jpg" alt="Mentorship session with young participants" />
+            <figcaption>Keynote Speech by Mr. Samuel Gadzo Gameli at the SRAC'26</figcaption>
+          </figure>
+          <figure>
+            <img src="Images/Inspired.st-3.jpg" alt="Workshop collaboration table" />
+            <figcaption>Keynote Speech by H.E. Daniel Korley Botchway at the SRAC'26</figcaption>
+          </figure>
+          <figure>
+            <img src="Images/inspired.st-142.jpg" alt="Speaker addressing audience" />
+            <figcaption>Keynote Speech by Mrs. Faustina Bienu at the SRAC'26</figcaption>
+          </figure>
+          <figure>
+            <img src="Images/inspired.st-191.jpg" alt="Community volunteer action" />
+            <figcaption>Alumni Panel Discussion at the SRAC'26</figcaption>
+          </figure>
+          <figure>
+            <img src="Images/Inspired.st-85.jpg" alt="Youth planning session" />
+            <figcaption>Volunteers at the SRAC'26</figcaption>
+          </figure>
+          <figure>
+            <img src="Images/Inspired.st-95.jpg" alt="Participants at educational gathering" />
+            <figcaption>Musical Performances at the SRAC'26</figcaption>
+          </figure>
+          <figure>
+            <img src="Images/inspired.st-173.jpg" alt="Group discussion at event" />
+            <figcaption>Fulfilled Participants, applauding keynote speeches</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container contact-wrap">
+        <form>
+          <h2>Contact Us</h2>
+          <label for="name">Name</label>
+          <input id="name" type="text" placeholder="Your name" />
+          <label for="email">Email</label>
+          <input id="email" type="email" placeholder="you@gmail.com" />
+          <label for="message">Message</label>
+          <textarea id="message" placeholder="Write your message here..."></textarea>
+          <button class="btn btn-primary" type="submit">Send Message</button>
+        </form>
+
+        <article class="info">
+          <h2>Contact Details</h2>
+          <p><strong>Email:</strong> eskalateghana@gmail.com</p>
+          <p><strong>Phone:</strong> 0543-849-336/0542-887-479</p>
+          <p><strong>Address:</strong> UEW South Campus</p>
+          <p class="lead">We welcome collaborations, volunteer partnerships, conference invitations, and youth empowerment opportunities.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div>© <span id="year"></span> eSKalate Initiative. All rights reserved.</div>
+      <div class="social-section" aria-label="Social media links">
+        <a class="social-link" href="https://www.facebook.com/share/188YuMcoo9/" target="_blank" rel="noopener noreferrer" aria-label="Facebook page">
+          <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 12a10 10 0 1 0-11.56 9.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.5-3.89 3.78-3.89 1.09 0 2.22.2 2.22.2v2.46H15.2c-1.2 0-1.57.75-1.57 1.52V12h2.68l-.43 2.89h-2.25v6.99A10 10 0 0 0 22 12"></path></svg>
+          Facebook
+        </a>
+        <a class="social-link" href="https://www.linkedin.com/company/eskalate-initiative/?viewAsMember=true" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn page">
+          <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 3A2 2 0 0 1 21 5v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm-9.5 6.5H6.9V18h2.6zM8.2 6a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3M18 12.2c0-2.8-1.5-4.1-3.5-4.1-1.6 0-2.3.9-2.7 1.5v-1.3H9.2V18h2.6v-5.1c0-1.4.3-2.8 2-2.8 1.7 0 1.7 1.6 1.7 2.9V18H18z"></path></svg>
+          LinkedIn
+        </a>
+        <a class="social-link" href="https://www.tiktok.com/@lemis_7?_r=1&_t=ZS-93tFJhk9d00" target="_blank" rel="noopener noreferrer" aria-label="TikTok page">
+          <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.6 8.3a7.3 7.3 0 0 1-4.2-1.3v6.1a5.6 5.6 0 1 1-4.8-5.5v2.7a2.9 2.9 0 1 0 2.1 2.8V2h2.7a4.6 4.6 0 0 0 4.2 3.7z"></path></svg>
+          TikTok
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const menuBtn = document.getElementById('menuBtn');
+    const siteNav = document.getElementById('siteNav');
+    const year = document.getElementById('year');
+
+    menuBtn.addEventListener('click', () => siteNav.classList.toggle('open'));
+
+    siteNav.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => siteNav.classList.remove('open'));
+    });
+
+    year.textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
